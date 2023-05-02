@@ -1,0 +1,46 @@
+<table mat-table [dataSource]="source">
+  <ng-container matColumnDef="deleteButton">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let favorite">
+      <button mat-mini-fab color="primary" (click)="delete(favorite)"><mat-icon>clear</mat-icon></button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="shoppingButton">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let favorite">
+      <ng-template [ngIf]="favorite.productAmount == null" [ngIfThen]="add" [ngIfElse]="increment"/>
+      <ng-template #add>
+        <button mat-mini-fab color="primary" (click)="addOrder(favorite)">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </ng-template>
+      <ng-template #increment>
+        <button mat-mini-fab color="primary" (click)="incrementOrderAmount(favorite)" [matBadge]="favorite.productAmount ? favorite.productAmount : ''" matBadgeColor="accent">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </ng-template>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="image">
+    <th mat-header-cell *matHeaderCellDef> Item </th>
+    <td mat-cell *matCellDef="let favorite">
+      <div class="img-div">
+        <img src="{{favorite.productImage}}" alt="Photo of {{favorite.productName}}"/>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let favorite"> {{favorite.productName}} </td>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Price </th>
+    <td mat-cell *matCellDef="let favorite"> {{favorite.productPrice | currency}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell">No Items</td>
+  </tr>
+</table>

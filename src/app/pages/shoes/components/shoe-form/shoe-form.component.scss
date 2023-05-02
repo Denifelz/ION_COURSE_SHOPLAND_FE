@@ -1,0 +1,46 @@
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.shoe-form {
+  min-width: 300px;
+}
+
+.shoe-view {
+  min-width: 500px;
+  display: flex;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.flex {
+  display: flex;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.img-div {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  margin: auto;
+
+  img {
+    max-width: 500px;
+    max-height: 700px;
+  }
+}
+
+

@@ -1,0 +1,75 @@
+<mat-drawer-container>
+  <mat-drawer #filter mode="side">
+    <mat-form-field>
+      <mat-label>Filter by name</mat-label>
+      <input matInput type="text" [(ngModel)]="shoeNameFilter">
+    </mat-form-field>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div>
+      <div *ngIf="shoes" class="absolute-top-right">
+        <button mat-fab color="primary" (click)="filter.toggle()"><mat-icon>filter_alt</mat-icon></button>
+      </div>
+      <mat-grid-list cols="5" rowHeight="300px">
+        <mat-grid-tile *ngIf="user && user.admin">
+          <mat-card matRipple (click)="shoeAdd()">
+            <button mat-fab color="warn" class="absolute-center">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-card>
+        </mat-grid-tile>
+        <div *ngFor="let shoe of shoes">
+          <mat-grid-tile *ngIf="shoe.name.toUpperCase().indexOf(shoeNameFilter.toUpperCase()) !== -1">
+            <mat-card>
+              <div matRipple class="container" (click)="shoeView(shoe)">
+                <mat-card-header>
+                  <mat-card-title>{{shoe.name}}</mat-card-title>
+                  <mat-card-subtitle>Price: {{shoe.price | currency}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="img-div">
+                    <img mat-card-image src="{{shoe.image}}" alt="Photo of {{shoe.name}}"/>
+                  </div>
+                </mat-card-content>
+              </div>
+              <ng-template [ngIf]="user._id" [ngIfThen]="thenUser"/>
+              <ng-template #thenUser>
+                <ng-template [ngIf]="user.admin" [ngIfThen]="thenAdmin" [ngIfElse]="noAdmin"/>
+                <ng-template #thenAdmin>
+                  <mat-card-actions class="flex">
+                    <button mat-mini-fab color="warn" (click)="shoeUpdate(shoe)"><mat-icon>edit_note</mat-icon></button>
+                    <span class="spacer"></span>
+                    <button mat-mini-fab color="warn" (click)="shoeDelete(shoe)"><mat-icon>delete_forever</mat-icon></button>
+                  </mat-card-actions>
+                </ng-template>
+                <ng-template #noAdmin>
+                  <mat-card-actions class="flex">
+                    <ng-template [ngIf]="shoe.isFavorite" [ngIfThen]="thenFavorite" [ngIfElse]="noFavorite"/>
+                    <ng-template #thenFavorite>
+                      <button mat-mini-fab color="primary" (click)="deleteFromFavorites(shoe)"><mat-icon>favorite</mat-icon></button>
+                    </ng-template>
+                    <ng-template #noFavorite>
+                      <button mat-mini-fab color="primary" (click)="addToFavorites(shoe)"><mat-icon>favorite_border</mat-icon></button>
+                    </ng-template>
+                    <span class="spacer"></span>
+                    <ng-template [ngIf]="shoe.orderAmount == null" [ngIfThen]="add" [ngIfElse]="increment"/>
+                    <ng-template #add>
+                      <button mat-mini-fab color="primary" (click)="addToOrders(shoe)">
+                        <mat-icon>add_shopping_cart</mat-icon>
+                      </button>
+                    </ng-template>
+                    <ng-template #increment>
+                      <button mat-mini-fab color="primary" (click)="incrementOrderAmount(shoe)" [matBadge]="shoe.orderAmount ? shoe.orderAmount : ''" matBadgeColor="accent">
+                        <mat-icon>add_shopping_cart</mat-icon>
+                      </button>
+                    </ng-template>
+                  </mat-card-actions>
+                </ng-template>
+              </ng-template>
+            </mat-card>
+          </mat-grid-tile>
+        </div>
+      </mat-grid-list>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,40 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon fontIcon="menu"/>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/shoes">Shoes</button>
+  </mat-menu>
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <ng-template [ngIf]="user._id" [ngIfThen]="thenUser" [ngIfElse]="noUser"/>
+  <ng-template #thenUser>
+    <ng-template [ngIf]="user.admin" [ngIfElse]="noAdmin"/>
+    <ng-template #noAdmin>
+      <ng-template [ngIf]="favorites.length" [ngIfThen]="thenFavorites" [ngIfElse]="noFavorites"/>
+      <ng-template #thenFavorites>
+        <button mat-fab color="primary" routerLink="/favorites" matBadge="{{favorites.length}}" matBadgeColor="accent"><mat-icon>favorite</mat-icon></button>
+      </ng-template>
+      <ng-template #noFavorites>
+        <button mat-fab color="primary"><mat-icon>favorite_border</mat-icon></button>
+      </ng-template>
+      <ng-template [ngIf]="orders.length" [ngIfThen]="thenOrders" [ngIfElse]="noOrders"/>
+      <ng-template #thenOrders>
+        <button mat-fab color="primary" routerLink="/orders" matBadge="{{orders.length}}" matBadgeColor="accent"><mat-icon>shopping_cart</mat-icon></button>
+      </ng-template>
+      <ng-template #noOrders>
+        <button mat-fab color="primary"><mat-icon>shopping_cart</mat-icon></button>
+      </ng-template>
+    </ng-template>
+    <button mat-fab extended [color]="(user.admin) ? 'warn' : 'primary'" (click)="logout()">
+      <mat-icon fontIcon="person_outline"/>
+      <span>Logout ({{user.name}} {{user.surname}})</span>
+    </button>
+  </ng-template>
+  <ng-template #noUser>
+    <button mat-fab extended color="primary" (click)="openLoginForm()">
+      <mat-icon fontIcon="person_outline"/>
+      <span>Login</span>
+    </button>
+  </ng-template>
+</mat-toolbar>

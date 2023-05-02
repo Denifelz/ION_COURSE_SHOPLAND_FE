@@ -1,0 +1,49 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.absolute-top-right {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  z-index: 1;
+}
+
+.flex {
+  display: flex;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-card {
+  width: 98%;
+  height: 98%;
+}
+
+.img-div {
+  position: relative;
+  width: 200px;
+  height: 150px;
+  overflow: hidden;
+  margin: auto;
+}
+
+img[mat-card-image] {
+  position: absolute;
+  max-width: 300px;
+  max-height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

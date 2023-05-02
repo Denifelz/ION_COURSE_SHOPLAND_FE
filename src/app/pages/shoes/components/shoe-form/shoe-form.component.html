@@ -1,0 +1,87 @@
+<h1 mat-dialog-title>{{title}}</h1>
+
+<mat-dialog-content>
+  <ng-template [ngIf]="view && shoe" [ngIfThen]="thenView" [ngIfElse]="noView"/>
+</mat-dialog-content>
+
+<ng-template #thenView>
+  <div class="shoe-view">
+    <div class="img-div">
+      <img class="absolute-center" src="{{shoe.image}}" alt="Photo of {{shoe.name}}"/>
+    </div>
+    <div>
+      <span>Price: {{shoe.price | currency}}</span>
+      <br>
+      <span>Color: {{shoe.color}}</span>
+      <br>
+      <span>Season: {{shoe.season}}</span>
+      <br>
+      <span>Type: {{shoe.type}}</span>
+      <br>
+      <span>Drawing: {{shoe.drawing}}</span>
+      <br>
+      <span>Composition: {{shoe.composition}}</span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noView>
+  <div class="shoe-form">
+    <form [formGroup]="shoeForm" (ngSubmit)="submit()">
+      <div>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price" type="number" class="right-align">
+          <span matTextPrefix>$&nbsp;</span>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Color</mat-label>
+          <input matInput formControlName="color">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Season</mat-label>
+          <input matInput formControlName="season" type="number" class="right-align">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Type</mat-label>
+          <input matInput formControlName="type">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Drawing</mat-label>
+          <input matInput formControlName="drawing">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field subscriptSizing="dynamic">
+          <mat-label>Composition</mat-label>
+          <input matInput formControlName="composition">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Image</mat-label>
+          <input matInput formControlName="image">
+        </mat-form-field>
+      </div>
+      <div class="flex">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <span class="spacer"></span>
+        <button mat-stroked-button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
