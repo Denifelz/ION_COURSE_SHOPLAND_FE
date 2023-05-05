@@ -1,4 +1,4 @@
-Final exercise of creating an online store
+Final exercise to create an online store.
 
 
 Sign Up:
